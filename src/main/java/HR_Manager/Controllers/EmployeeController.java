@@ -38,13 +38,14 @@ public class EmployeeController {
 
     @PostMapping("/Employee/login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
-
+        // authenticatnig provided username and email
         this.doAuthenticate(request.getEmail(), request.getPassword());
 
-
+        // extracting user details
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
         String token = this.jwtService.generateToken(userDetails);
 
+        // creating JWT token
         JwtResponse response= new JwtResponse(token , userDetails.getUsername());
 //        JwtResponse response = JwtResponse.builder()
 //                .jwtToken(token)
